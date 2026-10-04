@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta
+        name="description"
+        content="YUSUF CODE — муҳити муосир барои омӯзиш ва навиштани C++."
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b0f19"
+    >
+
+    <meta
+        name="author"
+        content="Юсуф"
+    >
+
+    <title>YUSUF CODE — C++ Mobile IDE</title>
+
+    <!--
+        Google Fonts
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!--
+        Application styles
+    -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!--
+        Prevent flash while application initializes
+    -->
+    <script>
+        document.documentElement.classList.add("app-loading");
+    </script>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         APPLICATION
+    ========================================================== -->
+
+    <div id="app" class="app">
+
+        <!-- =====================================================
+             MOBILE / DESKTOP HEADER
+        ====================================================== -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    id="menuButton"
+                    class="icon-button"
+                    type="button"
+                    aria-label="Меню"
+                    title="Меню"
+                >
+                    <span class="icon icon-menu">☰</span>
+                </button>
+
+                <div class="brand">
+
+                    <div class="brand-mark">
+                        Y
+                    </div>
+
+                    <div class="brand-info">
+                        <span class="brand-name">
+                            YUSUF CODE
+                        </span>
+
+                        <span class="brand-subtitle">
+                            C++ Mobile IDE
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-center">
+
+                <div class="project-selector">
+
+                    <span class="project-icon">
+                        📁
+                    </span>
+
+                    <span id="currentProjectName">
+                        Лоиҳаи ман
+                    </span>
+
+                    <span class="project-chevron">
+                        ▾
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button
+                    id="saveButton"
+                    class="toolbar-button"
+                    type="button"
+                    title="Захира кардан"
+                >
+                    <span>💾</span>
+                    <span class="button-label">Захира</span>
+                </button>
+
+                <button
+                    id="runButton"
+                    class="run-button"
+                    type="button"
+                    title="Иҷро кардани код"
+                >
+                    <span class="run-icon">▶</span>
+                    <span>Иҷро</span>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             MAIN APPLICATION
+        ====================================================== -->
+
+        <main class="workspace">
+
+            <!-- =================================================
+                 SIDEBAR
+            ================================================== -->
+
+            <aside
+                id="sidebar"
+                class="sidebar"
+                aria-label="Навигация"
+            >
+
+                <div class="sidebar-header">
+
+                    <div>
+                        <span class="sidebar-title">
+                            ЛОИҲА
+                        </span>
+
+                        <span
+                            id="projectFileCount"
+                            class="sidebar-count"
+                        >
+                            0 файл
+                        </span>
+                    </div>
+
+                    <button
+                        id="sidebarCloseButton"
+                        class="mobile-close-button"
+                        type="button"
+                        aria-label="Пӯшидан"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <!-- Project actions -->
+
+                <div class="file-actions">
+
+                    <button
+                        id="newFileButton"
+                        class="file-action"
+                        type="button"
+                    >
+                        <span>📄</span>
+                        <span>Файли нав</span>
+                    </button>
+
+                    <button
+                        id="newFolderButton"
+                        class="file-action"
+                        type="button"
+                    >
+                        <span>📁</span>
+                        <span>Папкаи нав</span>
+                    </button>
+
+                    <button
+                        id="searchFilesButton"
+                        class="file-action"
+                        type="button"
+                    >
+                        <span>🔍</span>
+                        <span>Ҷустуҷӯ</span>
+                    </button>
+
+                </div>
+
+
+                <!-- File tree -->
+
+                <div
+                    id="fileTree"
+                    class="file-tree"
+                    aria-label="Файлҳои лоиҳа"
+                >
+
+                    <!--
+                        File tree is generated by files.js
+                    -->
+
+                </div>
+
+
+                <!-- Sidebar footer -->
+
+                <div class="sidebar-footer">
+
+                    <button
+                        id="importProjectButton"
+                        class="sidebar-footer-button"
+                        type="button"
+                    >
+                        <span>📥</span>
+                        <span>Ворид кардан</span>
+                    </button>
+
+                    <button
+                        id="exportProjectButton"
+                        class="sidebar-footer-button"
+                        type="button"
+                    >
+                        <span>📤</span>
+                        <span>Содир кардан</span>
+                    </button>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =================================================
+                 EDITOR AREA
+            ================================================== -->
+
+            <section class="editor-area">
+
+                <!-- Editor tabs -->
+
+                <div
+                    id="editorTabs"
+                    class="editor-tabs"
+                >
+
+                    <!--
+                        Tabs are generated dynamically.
+                    -->
+
+                </div>
+
+
+                <!-- Editor toolbar -->
+
+                <div class="editor-toolbar">
+
+                    <div class="editor-toolbar-left">
+
+                        <button
+                            id="undoButton"
+                            class="editor-tool-button"
+                            type="button"
+                            title="Баргардондан"
+                        >
+                            ↶
+                        </button>
+
+                        <button
+                            id="redoButton"
+                            class="editor-tool-button"
+                            type="button"
+                            title="Такрор кардан"
+                        >
+                            ↷
+                        </button>
+
+                        <span class="toolbar-divider"></span>
+
+                        <button
+                            id="formatButton"
+                            class="editor-tool-button"
+                            type="button"
+                            title="Формат кардани код"
+                        >
+                            ✨
+                        </button>
+
+                        <button
+                            id="searchCodeButton"
+                            class="editor-tool-button"
+                            type="button"
+                            title="Ҷустуҷӯ дар код"
+                        >
+                            🔍
+                        </button>
+
+                    </div>
+
+
+                    <div class="editor-toolbar-right">
+
+                        <span
+                            id="cursorPosition"
+                            class="cursor-position"
+                        >
+                            Сатр 1 : 1
+                        </span>
+
+                        <span class="language-badge">
+                            C++
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Editor -->
+
+                <div
+                    id="editorContainer"
+                    class="editor-container"
+                >
+
+                    <div
+                        id="lineNumbers"
+                        class="line-numbers"
+                        aria-hidden="true"
+                    >
+                        1
+                    </div>
+
+
+                    <div class="code-editor-wrapper">
+
+                        <textarea
+                            id="codeEditor"
+                            class="code-editor"
+                            spellcheck="false"
+                            autocapitalize="off"
+                            autocomplete="off"
+                            autocorrect="off"
+                            aria-label="Муҳаррири C++"
+                            placeholder="// Кодро дар ин ҷо нависед..."
+                        ></textarea>
+
+                        <pre
+                            id="syntaxLayer"
+                            class="syntax-layer"
+                            aria-hidden="true"
+                        ></pre>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     EDITOR STATUS BAR
+                ================================================== -->
+
+                <div class="editor-statusbar">
+
+                    <div class="status-left">
+
+                        <span
+                            id="editorStatus"
+                            class="status-item status-ready"
+                        >
+                            ● Омода
+                        </span>
+
+                        <span class="status-item">
+                            UTF-8
+                        </span>
+
+                        <span class="status-item">
+                            LF
+                        </span>
+
+                    </div>
+
+
+                    <div class="status-right">
+
+                        <span
+                            id="codeLineCount"
+                            class="status-item"
+                        >
+                            1 сатр
+                        </span>
+
+                        <span
+                            id="codeCharCount"
+                            class="status-item"
+                        >
+                            0 аломат
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 RIGHT PANEL
+            ================================================== -->
+
+            <aside
+                id="rightPanel"
+                class="right-panel"
+            >
+
+                <!-- Panel tabs -->
+
+                <div class="panel-tabs">
+
+                    <button
+                        class="panel-tab active"
+                        type="button"
+                        data-panel="output"
+                    >
+                        Натиҷа
+                    </button>
+
+                    <button
+                        class="panel-tab"
+                        type="button"
+                        data-panel="input"
+                    >
+                        Вуруд
+                    </button>
+
+                    <button
+                        class="panel-tab"
+                        type="button"
+                        data-panel="errors"
+                    >
+                        Хатоҳо
+                    </button>
+
+                </div>
+
+
+                <!-- Output panel -->
+
+                <div
+                    id="outputPanel"
+                    class="panel-content active"
+                >
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <span class="panel-title">
+                                OUTPUT
+                            </span>
+
+                            <span
+                                id="executionStatus"
+                                class="execution-status"
+                            >
+                                Омода
+                            </span>
+                        </div>
+
+                        <button
+                            id="clearOutputButton"
+                            class="panel-clear-button"
+                            type="button"
+                        >
+                            Тоза
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="terminalOutput"
+                        class="terminal-output"
+                    >
+
+                        <div class="terminal-welcome">
+
+                            <div class="terminal-icon">
+                                &gt;_
+                            </div>
+
+                            <div>
+                                <strong>
+                                    YUSUF CODE Terminal
+                                </strong>
+
+                                <p>
+                                    Барои иҷро кардани код
+                                    тугмаи «Иҷро»-ро пахш кунед.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Input panel -->
+
+                <div
+                    id="inputPanel"
+                    class="panel-content"
+                >
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <span class="panel-title">
+                                INPUT
+                            </span>
+
+                            <span class="panel-description">
+                                Маълумоти воридшаванда
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <textarea
+                        id="programInput"
+                        class="program-input"
+                        spellcheck="false"
+                        placeholder="Маълумоти input-ро дар ин ҷо нависед..."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- Errors panel -->
+
+                <div
+                    id="errorsPanel"
+                    class="panel-content"
+                >
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <span class="panel-title">
+                                ХАТОҲО
+                            </span>
+
+                            <span
+                                id="errorCount"
+                                class="error-count"
+                            >
+                                0
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="errorList"
+                        class="error-list"
+                    >
+
+                        <div class="empty-state">
+
+                            <div class="empty-state-icon">
+                                ✓
+                            </div>
+
+                            <strong>
+                                Хато нест
+                            </strong>
+
+                            <p>
+                                Ҳангоми иҷрои код хатогиҳо
+                                дар ин ҷо нишон дода мешаванд.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </main>
+
+
+        <!-- =====================================================
+             BOTTOM NAVIGATION — MOBILE
+        ====================================================== -->
+
+        <nav
+            id="bottomNavigation"
+            class="bottom-navigation"
+            aria-label="Навигацияи асосӣ"
+        >
+
+            <button
+                class="bottom-nav-item active"
+                type="button"
+                data-view="files"
+            >
+                <span class="bottom-nav-icon">📁</span>
+                <span>Файлҳо</span>
+            </button>
+
+            <button
+                class="bottom-nav-item"
+                type="button"
+                data-view="ai"
+            >
+                <span class="bottom-nav-icon">🧠</span>
+                <span>AI</span>
+            </button>
+
+            <button
+                class="bottom-nav-item run"
+                type="button"
+                data-view="run"
+            >
+                <span class="bottom-nav-icon">▶</span>
+                <span>Иҷро</span>
+            </button>
+
+            <button
+                class="bottom-nav-item"
+                type="button"
+                data-view="debug"
+            >
+                <span class="bottom-nav-icon">🐞</span>
+                <span>Debug</span>
+            </button>
+
+            <button
+                class="bottom-nav-item"
+                type="button"
+                data-view="settings"
+            >
+                <span class="bottom-nav-icon">⚙</span>
+                <span>Бештар</span>
+            </button>
+
+        </nav>
+
+
+        <!-- =====================================================
+             MOBILE OVERLAY
+        ====================================================== -->
+
+        <div
+            id="sidebarOverlay"
+            class="sidebar-overlay"
+            aria-hidden="true"
+        ></div>
+
+
+        <!-- =====================================================
+             COMMAND / SEARCH MODAL
+        ====================================================== -->
+
+        <div
+            id="searchModal"
+            class="modal"
+            aria-hidden="true"
+        >
+
+            <div class="modal-backdrop"></div>
+
+            <div class="modal-card">
+
+                <div class="modal-header">
+
+                    <div>
+                        <span class="modal-title">
+                            Ҷустуҷӯ
+                        </span>
+
+                        <span class="modal-subtitle">
+                            Дар файлҳо ва код ҷустуҷӯ кунед
+                        </span>
+                    </div>
+
+                    <button
+                        class="modal-close"
+                        type="button"
+                        data-close-modal="searchModal"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div class="search-box">
+
+                    <span class="search-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        id="globalSearchInput"
+                        type="search"
+                        placeholder="Ҷустуҷӯ..."
+                        autocomplete="off"
+                    >
+
+                    <kbd>
+                        ESC
+                    </kbd>
+
+                </div>
+
+
+                <div
+                    id="searchResults"
+                    class="search-results"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             CREATE FILE MODAL
+        ====================================================== -->
+
+        <div
+            id="newFileModal"
+            class="modal"
+            aria-hidden="true"
+        >
+
+            <div class="modal-backdrop"></div>
+
+            <div class="modal-card small">
+
+                <div class="modal-header">
+
+                    <div>
+                        <span class="modal-title">
+                            Файли нав
+                        </span>
+
+                        <span class="modal-subtitle">
+                            Номи файли навро ворид кунед
+                        </span>
+                    </div>
+
+                    <button
+                        class="modal-close"
+                        type="button"
+                        data-close-modal="newFileModal"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <form id="newFileForm">
+
+                    <label
+                        class="form-label"
+                        for="newFileName"
+                    >
+                        Номи файл
+                    </label>
+
+                    <input
+                        id="newFileName"
+                        class="form-input"
+                        type="text"
+                        placeholder="main.cpp"
+                        autocomplete="off"
+                        required
+                    >
+
+                    <div class="form-actions">
+
+                        <button
+                            type="button"
+                            class="secondary-button"
+                            data-close-modal="newFileModal"
+                        >
+                            Бекор кардан
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            Сохтан
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             CREATE FOLDER MODAL
+        ====================================================== -->
+
+        <div
+            id="newFolderModal"
+            class="modal"
+            aria-hidden="true"
+        >
+
+            <div class="modal-backdrop"></div>
+
+            <div class="modal-card small">
+
+                <div class="modal-header">
+
+                    <div>
+                        <span class="modal-title">
+                            Папкаи нав
+                        </span>
+
+                        <span class="modal-subtitle">
+                            Номи папкаро ворид кунед
+                        </span>
+                    </div>
+
+                    <button
+                        class="modal-close"
+                        type="button"
+                        data-close-modal="newFolderModal"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <form id="newFolderForm">
+
+                    <label
+                        class="form-label"
+                        for="newFolderName"
+                    >
+                        Номи папка
+                    </label>
+
+                    <input
+                        id="newFolderName"
+                        class="form-input"
+                        type="text"
+                        placeholder="src"
+                        autocomplete="off"
+                        required
+                    >
+
+                    <div class="form-actions">
+
+                        <button
+                            type="button"
+                            class="secondary-button"
+                            data-close-modal="newFolderModal"
+                        >
+                            Бекор кардан
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            Сохтан
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SETTINGS MODAL
+        ====================================================== -->
+
+        <div
+            id="settingsModal"
+            class="modal"
+            aria-hidden="true"
+        >
+
+            <div class="modal-backdrop"></div>
+
+            <div class="modal-card">
+
+                <div class="modal-header">
+
+                    <div>
+                        <span class="modal-title">
+                            Танзимот
+                        </span>
+
+                        <span class="modal-subtitle">
+                            Танзимоти YUSUF CODE
+                        </span>
+                    </div>
+
+                    <button
+                        class="modal-close"
+                        type="button"
+                        data-close-modal="settingsModal"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div class="settings-list">
+
+                    <div class="setting-item">
+
+                        <div class="setting-info">
+
+                            <strong>
+                                Мавзӯъ
+                            </strong>
+
+                            <span>
+                                Намуди интерфейс
+                            </span>
+
+                        </div>
+
+                        <select
+                            id="themeSelect"
+                            class="setting-select"
+                        >
+                            <option value="dark">
+                                Торик
+                            </option>
+
+                            <option value="light">
+                                Равшан
+                            </option>
+
+                            <option value="system">
+                                Системавӣ
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="setting-item">
+
+                        <div class="setting-info">
+
+                            <strong>
+                                Андозаи код
+                            </strong>
+
+                            <span>
+                                Андозаи шрифт дар editor
+                            </span>
+
+                        </div>
+
+                        <select
+                            id="fontSizeSelect"
+                            class="setting-select"
+                        >
+                            <option value="13">
+                                13px
+                            </option>
+
+                            <option value="14" selected>
+                                14px
+                            </option>
+
+                            <option value="15">
+                                15px
+                            </option>
+
+                            <option value="16">
+                                16px
+                            </option>
+
+                            <option value="18">
+                                18px
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="setting-item">
+
+                        <div class="setting-info">
+
+                            <strong>
+                                Tab size
+                            </strong>
+
+                            <span>
+                                Фосилаи indentation
+                            </span>
+
+                        </div>
+
+                        <select
+                            id="tabSizeSelect"
+                            class="setting-select"
+                        >
+                            <option value="2">
+                                2
+                            </option>
+
+                            <option value="4" selected>
+                                4
+                            </option>
+
+                            <option value="8">
+                                8
+                            </option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             TOAST NOTIFICATIONS
+        ====================================================== -->
+
+        <div
+            id="toastContainer"
+            class="toast-container"
+            aria-live="polite"
+            aria-atomic="true"
+        ></div>
+
+
+        <!-- =====================================================
+             LOADING SCREEN
+        ====================================================== -->
+
+        <div
+            id="loadingScreen"
+            class="loading-screen"
+        >
+
+            <div class="loading-logo">
+                Y
+            </div>
+
+            <div class="loading-title">
+                YUSUF CODE
+            </div>
+
+            <div class="loading-subtitle">
+                C++ Mobile IDE
+            </div>
+
+            <div class="loading-spinner"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         APPLICATION DATA
+    ========================================================== -->
+
+    <script src="data/lessons.js" defer></script>
+    <script src="data/problems.js" defer></script>
+
+
+    <!-- =========================================================
+         APPLICATION MODULES
+    ========================================================== -->
+
+    <script src="js/storage.js" defer></script>
+    <script src="js/terminal.js" defer></script>
+    <script src="js/autocomplete.js" defer></script>
+    <script src="js/debugger.js" defer></script>
+    <script src="js/compiler.js" defer></script>
+    <script src="js/files.js" defer></script>
+    <script src="js/editor.js" defer></script>
+    <script src="js/app.js" defer></script>
+
+</body>
+</html>
