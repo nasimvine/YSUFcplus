@@ -1,0 +1,159 @@
+@media (min-width: 1400px) {
+    :root {
+        --sidebar-width: 270px;
+        --panel-width: 360px;
+    }
+
+    .code-editor,
+    .syntax-layer,
+    .line-numbers {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .right-panel {
+        flex-basis: 260px;
+        width: 260px;
+    }
+
+    .sidebar {
+        flex-basis: 220px;
+        width: 220px;
+    }
+}
+
+@media (max-width: 900px) {
+    .right-panel {
+        display: none;
+    }
+
+    .topbar-center {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        position: fixed;
+        z-index: 80;
+        top: var(--header-height);
+        bottom: 57px;
+        left: 0;
+        width: min(290px, 88vw);
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay.active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .bottom-navigation {
+        display: flex;
+    }
+
+    .workspace {
+        padding-bottom: 57px;
+    }
+
+    .brand-subtitle {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .topbar {
+        padding: 0 7px;
+    }
+
+    .brand-name {
+        font-size: 11px;
+    }
+
+    .brand-mark {
+        width: 30px;
+        height: 30px;
+    }
+
+    .topbar-actions {
+        gap: 4px;
+    }
+
+    .run-button {
+        min-width: 62px;
+        padding: 0 8px;
+    }
+
+    .editor-toolbar {
+        padding: 0 5px;
+    }
+
+    .editor-tool-button {
+        width: 27px;
+    }
+
+    .language-badge {
+        display: none;
+    }
+
+    .status-item {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 360px) {
+    .brand-info {
+        display: none;
+    }
+
+    .toolbar-button {
+        display: none;
+    }
+
+    .bottom-nav-item {
+        font-size: 7px;
+    }
+
+    .bottom-nav-icon {
+        font-size: 15px;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .bottom-navigation {
+        height: 48px;
+    }
+
+    .workspace {
+        padding-bottom: 48px;
+    }
+
+    .sidebar {
+        bottom: 48px;
+    }
+
+    .sidebar-overlay {
+        bottom: 48px;
+    }
+
+    .bottom-nav-item {
+        flex-direction: row;
+        gap: 5px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
